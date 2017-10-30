@@ -1,14 +1,17 @@
 package com.theandroiddev.mvplearn5;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.EMPTY_LIST;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by grazyna on 2017-10-29.
@@ -16,28 +19,35 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 public class SuccessActivityPresenterTest {
 
+    private final List<Success> successList = Arrays.asList(new Success(), new Success());
     @Mock
     SuccessRepository successRepository;
     @Mock
     SuccessActivityView view;
+    SuccessActivityPresenter presenter;
+
+    @Before
+    public void setUp() {
+        presenter = new SuccessActivityPresenter(view, successRepository);
+    }
 
     @Test
     public void shouldShowNoSuccesses() {
 
-        Mockito.when(successRepository.getSuccesses()).thenReturn(Collections.EMPTY_LIST);
-        SuccessActivityPresenter presenter = new SuccessActivityPresenter(view, successRepository);
+        when(successRepository.getSuccesses()).thenReturn(EMPTY_LIST);
+
         presenter.loadSuccesses();
-        Mockito.verify(view).displayNoSuccesses();
+
+        verify(view).displayNoSuccesses();
     }
 
     @Test
     public void shouldShowSuccesses() {
-        List<Success> successList = Arrays.asList(new Success(), new Success());
-        Mockito.when(successRepository.getSuccesses()).thenReturn(successList);
-        SuccessActivityPresenter presenter = new SuccessActivityPresenter(view, successRepository);
-        presenter.loadSuccesses();
-        Mockito.verify(view).displaySuccesses(successList);
+        when(successRepository.getSuccesses()).thenReturn(successList);
 
+        presenter.loadSuccesses();
+
+        verify(view).displaySuccesses(successList);
     }
 
 }
