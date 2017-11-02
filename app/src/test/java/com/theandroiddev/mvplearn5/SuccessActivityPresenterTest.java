@@ -1,10 +1,11 @@
 package com.theandroiddev.mvplearn5;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,10 +17,11 @@ import static org.mockito.Mockito.when;
 /**
  * Created by grazyna on 2017-10-29.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class SuccessActivityPresenterTest {
 
     private final List<Success> successList = Arrays.asList(new Success(), new Success());
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
     SuccessRepository successRepository;
     @Mock
